@@ -82,3 +82,7 @@ print('Cost at (fixed) debugging parameters (w/ lambda = 3): ', debug_j)
 print('(for lambda = 3, this value should be about 0.576051)')
 
 input('Program paused. Press enter to continue.')
+
+# =============== Part 8: Training NN ===============
+
+print("Training Neural Network...")
