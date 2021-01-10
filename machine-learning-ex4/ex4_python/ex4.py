@@ -2,9 +2,12 @@ import os
 import numpy as np
 from scipy.io import loadmat
 from nn_cost import nn_cost
+from nn_grad import nn_grad
 from sigmoid_gradient import sigmoid_gradient
 from rand_initialize_weights import rand_initialize_weights
 from check_nn_gradients import check_nn_gradients
+from scipy.optimize import fmin_cg
+from predict import predict
 
 # Initialization
 os.system('clear')
@@ -83,6 +86,18 @@ print('(for lambda = 3, this value should be about 0.576051)')
 
 input('Program paused. Press enter to continue.')
 
-# =============== Part 8: Training NN ===============
+# =============== Part 9: Training NN ===============
 
 print("Training Neural Network...")
+lbda = 1
+fmin_result = fmin_cg(nn_cost, initial_nn_params, nn_grad, (input_layer_size, hidden_layer_size, num_labels, X, y, lbda), maxiter=50, full_output=True)
+nn_params = fmin_result[0].flatten()
+Theta1 = np.reshape(nn_params[0 : hidden_layer_size * (input_layer_size + 1)], (hidden_layer_size, input_layer_size + 1))
+Theta2 = np.reshape(nn_params[hidden_layer_size * (input_layer_size + 1) : ], (num_labels, hidden_layer_size + 1))
+
+input("Program paused. Press Enter to cotinue.")
+
+# ================= Part 9: Visualize Weights =================
+
+pred = predict(Theta1, Theta2, X)
+print('Training Set Accuracy: {}%'.format(np.mean(pred == y.flatten()) * 100))
