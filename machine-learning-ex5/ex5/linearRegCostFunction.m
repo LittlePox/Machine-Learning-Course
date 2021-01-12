@@ -12,7 +12,6 @@ _theta(1) = 0;
 
 % You need to return the following variables correctly 
 J = (y' - theta' * X') * (y - X * theta) / m / 2 + _theta' * _theta * lambda / m / 2;
-y - X * theta
 
 grad = (X * theta - y)' * X / m + _theta' * lambda / m ;
 
